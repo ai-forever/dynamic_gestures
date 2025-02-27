@@ -1,0 +1,5 @@
+filterpy==1.4.5
+numpy==1.23.5
+onnx==1.13.0
+onnxruntime==1.13.1
+opencv-contrib-python==4.6.0.66
