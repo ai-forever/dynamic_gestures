@@ -36,11 +36,20 @@ pip install -r requirements.txt
 ```
 
 ## Demo
-To run demo, you need to download ONNX models from [here](https://drive.google.com/drive/folders/11OhbIS9SC0ULAxCn6S4FQNeCuuPWT53F?usp=share_link) and put them into `onnx_models` folder. Then run `run_demo.py` script.
+To run demo, you just need to run `run_demo.py` script.
 
 ```bash
-python run_demo.py --detector <path_to_detector> --classifier <path_to_classifier> --debug (optional)
+python run_demo.py --detector <path_to_detector> --classifier <path_to_classifier> --debug
 ```
+`--detector   (optional)`  Path to the hand detector model.  
+                         **Default:** `models/hand_detector.onnx`
+
+`--classifier (optional)`  Path to the crops classifier model.  
+                         **Default:** `models/crops_classifier.onnx`
+
+`--debug      (optional)`  Enables debug mode to see bounding boxes and class labels.
+
+
 
 ## Dynamic gestures
 Next, we will show dynamic gestures in user mode and debug mode. In user mode, we show only the final result of dynamic gesture recognition. In debug mode, we show the result of each step of dynamic gesture recognition:

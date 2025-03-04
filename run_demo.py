@@ -134,13 +134,20 @@ def run(args):
 if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser(description="Run demo")
-    parser.add_argument("--detector", required=True, type=str, help="Path to detector onnx model")
+    parser.add_argument(
+        "--detector",
+        default='models/hand_detector.onnx',
+        type=str,
+        help="Path to detector onnx model"
+    )
+
     parser.add_argument(
         "--classifier",
-        required=True,
+        default='models/crops_classifier.onnx',
         type=str,
         help="Path to classifier onnx model",
     )
+
     parser.add_argument("--debug", required=False, action="store_true", help="Debug mode")
     args = parser.parse_args()
     run(args)
