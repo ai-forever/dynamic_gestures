@@ -41,10 +41,10 @@ To run demo, you just need to run `run_demo.py` script.
 ```bash
 python run_demo.py --detector <path_to_detector> --classifier <path_to_classifier> --debug
 ```
-`--detector   (optional)`  Path to the hand detector model.  
+`--detector   (optional)`  Path to the hand detector model.
                          **Default:** `models/hand_detector.onnx`
 
-`--classifier (optional)`  Path to the crops classifier model.  
+`--classifier (optional)`  Path to the crops classifier model.
                          **Default:** `models/crops_classifier.onnx`
 
 `--debug      (optional)`  Enables debug mode to see bounding boxes and class labels.
@@ -102,7 +102,7 @@ At the moment the code supports 6 groups of dynamic gestures:
 </div>
 
 ### License
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a variant of <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+This work is licensed under a variant of <a rel="license" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.
 
 Please see the specific [license](./license/en_us.pdf).
 
@@ -110,12 +110,11 @@ Please see the specific [license](./license/en_us.pdf).
 You can cite the paper using the following BibTeX entry:
 
     @misc{nuzhdin2024hagridv21mimagesstatic,
-          title={HaGRIDv2: 1M Images for Static and Dynamic Hand Gesture Recognition}, 
+          title={HaGRIDv2: 1M Images for Static and Dynamic Hand Gesture Recognition},
           author={Anton Nuzhdin and Alexander Nagaev and Alexander Sautin and Alexander Kapitanov and Karina Kvanchiani},
           year={2024},
           eprint={2412.01508},
           archivePrefix={arXiv},
           primaryClass={cs.CV},
-          url={https://arxiv.org/abs/2412.01508}, 
+          url={https://arxiv.org/abs/2412.01508},
     }
-    
