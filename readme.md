@@ -36,20 +36,11 @@ pip install -r requirements.txt
 ```
 
 ## Demo
-To run demo, you just need to run `run_demo.py` script.
+To run demo, you need to download ONNX models from [here](https://drive.google.com/drive/folders/11OhbIS9SC0ULAxCn6S4FQNeCuuPWT53F?usp=share_link) and put them into `onnx_models` folder. Then run `run_demo.py` script.
 
 ```bash
-python run_demo.py --detector <path_to_detector> --classifier <path_to_classifier> --debug
+python run_demo.py --detector <path_to_detector> --classifier <path_to_classifier> --debug (optional)
 ```
-`--detector   (optional)`  Path to the hand detector model.
-                         **Default:** `models/hand_detector.onnx`
-
-`--classifier (optional)`  Path to the crops classifier model.
-                         **Default:** `models/crops_classifier.onnx`
-
-`--debug      (optional)`  Enables debug mode to see bounding boxes and class labels.
-
-
 
 ## Dynamic gestures
 Next, we will show dynamic gestures in user mode and debug mode. In user mode, we show only the final result of dynamic gesture recognition. In debug mode, we show the result of each step of dynamic gesture recognition:
@@ -58,63 +49,27 @@ Next, we will show dynamic gestures in user mode and debug mode. In user mode, w
 3. gesture recognition
 4. action recognition
 
-At the moment the code supports 6 groups of dynamic gestures:
+At the moment the code supports 5 types of dynamic gestures:
 
-<table style="width: 100%; table-layout: fixed;">
-  <tr>
-    <td valign="top" style="padding: 10px; text-align: left; min-height: 600px;">
-      <h4 style="text-align: left;">ZOOM</h4>
-      <div style="text-align: left;">
-        <img src="images/zoom_in_out.gif" height="200" alt="Zoom In/Out">
-        <img src="images/zoom.gif" height="200" alt="Zoom">
-      </div>
-      <h4 style="text-align: left;">DRAG AND DROP</h4>
-      <div style="text-align: left;">
-        <img src="images/dndv1.gif" height="200" alt="Drag and Drop 1">
-        <img src="images/dndv2.gif" height="200" alt="Drag and Drop 2">
-        <img src="images/dndv3.gif" height="200" alt="Drag and Drop 3">
-      </div>
-    </td>
-    <td valign="top" style="padding: 10px; text-align: left; min-height: 600px;">
-      <h4 style="text-align: left;">FAST SWIPE UP / DOWN</h4>
-      <div style="text-align: left;">
-        <img src="images/fast_up_down.gif" height="200" alt="Fast Swipe Up/Down">
-      </div>
-      <h4 style="text-align: left;">CLICK</h4>
-      <div style="text-align: left;">
-        <img src="images/clicks.gif" height="200" alt="Clicks">
-      </div>
-      <h4 style="text-align: left;">SWIPES LEFT / RIGHT</h4>
-      <div style="text-align: left;">
-        <img src="images/swipe_left_right.gif" height="200" alt="Swipe Left/Right">
-        <img src="images/swipe2_left_right.gif" height="200" alt="Swipe 2 Left/Right">
-        <img src="images/swipe3_left_right.gif" height="200" alt="Swipe 3 Left/Right">
-      </div>
-    </td>
-  </tr>
-</table>
+#### SWIPE LEFT
+![swipe_left](images/swipe_left.gif)
 
-<h4 style="text-align: left;">SWIPES UP / DOWN</h4>
-<div style="text-align: left; min-height: 200px;">
-  <img src="images/swipe_up_down.gif" height="200" alt="Swipe Up/Down">
-  <img src="images/swipe2_up_down.gif" height="200" alt="Swipe 2 Up/Down">
-  <img src="images/swipe3_up_down.gif" height="200" alt="Swipe 3 Up/Down">
-</div>
+#### SWIPE RIGHT
+![swipe_right](images/swipe_right.gif)
+
+#### SWIPE UP
+![swipe_up](images/swipe_up.gif)
+
+#### SWIPE DOWN
+![swipe_down](images/swipe_down.gif)
+
+#### DRAG AND DROP
+![dnd](images/dnd.gif)
+
+## Multi-hand dynamic gestures
+Also, we support multi-hand dynamic gestures. For example, you can swipe left and right with drag and drop action. The code supports 5 types of dynamic gestures:
+
+![multi_hand](images/multi_hand.gif)
 
 ### License
 This work is licensed under a variant of <a rel="license" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.
-
-Please see the specific [license](./license/en_us.pdf).
-
-### Citation
-You can cite the paper using the following BibTeX entry:
-
-    @misc{nuzhdin2024hagridv21mimagesstatic,
-          title={HaGRIDv2: 1M Images for Static and Dynamic Hand Gesture Recognition},
-          author={Anton Nuzhdin and Alexander Nagaev and Alexander Sautin and Alexander Kapitanov and Karina Kvanchiani},
-          year={2024},
-          eprint={2412.01508},
-          archivePrefix={arXiv},
-          primaryClass={cs.CV},
-          url={https://arxiv.org/abs/2412.01508},
-    }

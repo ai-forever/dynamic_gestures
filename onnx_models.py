@@ -4,6 +4,8 @@ import cv2
 import numpy as np
 import onnxruntime as ort
 
+from utils import hard_nms
+
 
 class OnnxModel(ABC):
     def __init__(self, model_path, image_size):
@@ -100,23 +102,83 @@ class OnnxModel(ABC):
             f"Outputs: {self.outputs}"
         )
 
+
 class HandDetection(OnnxModel):
-    def __init__(self, model_path, image_size=(320, 240)):
+    def __init__(self, model_path, image_size=(320, 240), prob_threshold=0.9, iou_threshold=0.5):
         super().__init__(model_path, image_size)
-        self.image_size = image_size
-        self.sess = ort.InferenceSession(model_path)
         self.input_name = self.sess.get_inputs()[0].name
-        self.output_names = [output.name for output in self.sess.get_outputs()]
-        
+        self.prob_threshold = prob_threshold
+        self.iou_threshold = iou_threshold
+
+    def predict(self, width, height, confidences, boxes, top_k=-1):
+        """
+        Get predictions from model
+        Parameters
+        ----------
+        width : int
+            Width of frame
+        height : int
+            Height of frame
+        confidences : np.ndarray
+            Confidences from model
+        boxes : np.ndarray
+            Boxes from model
+        prob_threshold : float
+            Probability threshold
+        iou_threshold : float
+            IoU threshold
+        top_k : int
+            Top k predictions
+        """
+        boxes = boxes[0]
+        confidences = confidences[0]
+        picked_box_probs = []
+        picked_labels = []
+        for class_index in range(1, confidences.shape[1]):
+            probs = confidences[:, class_index]
+            mask = probs > self.prob_threshold
+            probs = probs[mask]
+            if probs.shape[0] == 0:
+                continue
+            subset_boxes = boxes[mask, :]
+            box_probs = np.concatenate([subset_boxes, probs.reshape(-1, 1)], axis=1)
+            box_probs = hard_nms(
+                box_probs,
+                iou_threshold=self.iou_threshold,
+                top_k=top_k,
+            )
+            picked_box_probs.append(box_probs)
+            picked_labels.extend([class_index] * box_probs.shape[0])
+        if not picked_box_probs:
+            return np.array([]), np.array([]), np.array([])
+        picked_box_probs = np.concatenate(picked_box_probs)
+        picked_box_probs[:, 0] *= width
+        picked_box_probs[:, 1] *= height
+        picked_box_probs[:, 2] *= width
+        picked_box_probs[:, 3] *= height
+        return picked_box_probs[:, :4].astype(np.int32), np.array(picked_labels), picked_box_probs[:, 4]
+
     def __call__(self, frame):
+        """
+        Main function for hand detection
+        Parameters
+        ----------
+        frame : np.ndarray
+            Frame to detect hands
+
+        Returns
+        -------
+        boxes : np.ndarray
+            Boxes of hands
+        labels : np.ndarray
+            Labels of hands
+        """
         input_tensor = self.preprocess(frame)
-        boxes, _, probs = self.sess.run(self.output_names, {self.input_name: input_tensor})
-        width, height = frame.shape[1], frame.shape[0]
-        boxes[:, 0] *= width
-        boxes[:, 1] *= height
-        boxes[:, 2] *= width
-        boxes[:, 3] *= height
-        return boxes.astype(np.int32), probs
+
+        confidences, boxes = self.sess.run(None, {self.input_name: input_tensor})
+
+        boxes, _, probs = self.predict(frame.shape[1], frame.shape[0], confidences, boxes)
+        return boxes, probs
 
 
 class HandClassification(OnnxModel):
