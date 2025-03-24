@@ -27,7 +27,7 @@ Clone and install required python packages:
 ```bash
 git clone https://github.com/ai-forever/dynamic_gestures.git
 # or mirror link:
-cd hagrid
+cd dynamic_gestures
 # Create virtual env by conda or venv
 conda create -n dynamic_gestures python=3.9 -y
 conda activate dynamic_gestures
