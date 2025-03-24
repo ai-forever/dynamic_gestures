@@ -25,7 +25,7 @@ This repository contains using HaGRID dataset for dynamic gesture recognition. T
 ## Installation
 Clone and install required python packages:
 ```bash
-git clone https://github.com/nagadit/hagrid-dynamic.git
+git clone https://github.com/ai-forever/dynamic_gestures.git
 # or mirror link:
 cd hagrid
 # Create virtual env by conda or venv
@@ -104,7 +104,7 @@ At the moment the code supports 6 groups of dynamic gestures:
 ### License
 This work is licensed under a variant of <a rel="license" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.
 
-Please see the specific [license](./license/en_us.pdf).
+Please see the specific [license](./license/LICENSE-2.0.txt).
 
 ### Citation
 You can cite the paper using the following BibTeX entry:
