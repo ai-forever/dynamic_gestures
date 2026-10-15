@@ -138,11 +138,11 @@ class HandClassification(OnnxModel):
         x0, y0, x1, y1 = box
         w, h = x1 - x0, y1 - y0
         if h < w:
-            y0 = y0 - int((w - h) / 2)
-            y1 = y0 + w
+            y0 = max(0, y0 - int((w - h) / 2))
+            y1 = min(height - 1, y0 + w)
         if h > w:
-            x0 = x0 - int((h - w) / 2)
-            x1 = x0 + h
+            x0 = max(0, x0 - int((h - w) / 2))
+            x1 = min(width - 1, x0 + h)
         x0 = max(0, x0)
         y0 = max(0, y0)
         x1 = min(width - 1, x1)
