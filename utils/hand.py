@@ -16,6 +16,8 @@ class Hand:
         """
         self.bbox = bbox
         self.hand_id = hand_id
+        self.center = None
+        self.size = None
         if self.bbox is not None:
             self.center = self._get_center()
             self.size = self.bbox[2] - self.bbox[0]
