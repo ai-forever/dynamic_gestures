@@ -137,10 +137,16 @@ class HandClassification(OnnxModel):
         x0, y0, x1, y1 = box
         w, h = x1 - x0, y1 - y0
         if h < w:
-            y0 = max(0, y0 - int((w - h) / 2))
+            # Expand vertically to a square. Clamp the origin below the top
+            # edge (so the box is centred when the square fits) and also below
+            # ``height - 1 - w`` so the square still fits when the box sits
+            # near the bottom edge (otherwise ``y1`` is clamped and the crop
+            # loses its square shape).
+            y0 = max(0, min(y0 - int((w - h) / 2), height - 1 - w))
             y1 = min(height - 1, y0 + w)
         if h > w:
-            x0 = max(0, x0 - int((h - w) / 2))
+            # Symmetric horizontal expansion near the right edge.
+            x0 = max(0, min(x0 - int((h - w) / 2), width - 1 - h))
             x1 = min(width - 1, x0 + h)
         x0 = max(0, x0)
         y0 = max(0, y0)
